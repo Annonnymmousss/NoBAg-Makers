@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to left, rgb(34, 200, 255), rgb(104, 255, 104));
+  }
+  
+  .container {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin: 0 0 10px;
+  }
+  
+  h2 {
+    font-size: 18px;
+    color: #555;
+    margin: 0 0 20px;
+  }
+  
+  .tabs {
+    display: flex;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    flex: 1;
+    padding: 10px 0;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+  }
+  
+  .tab.active {
+    color: #4a47a3;
+    border-bottom-color: #4a47a3;
+  }
+  
+  .search-bar {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+  }
+  
+  .search-bar .search-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #4a47a3;
+    color: #fff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .search-bar .search-button:hover {
+    background-color: #3734a1;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table th, table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  table th {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  table td {
+    color: #333;
+  }
+  
+  .add-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-button:hover {
+    background-color: #45a049;
+  }
+  

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <link rel="stylesheet" href="/styles chat.css">
+    <link rel="stylesheet" href="/styles notification.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!--Socket.io-->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!--Code for realtime notifications-->
+    <script src="/utils/notification.js"></script>
+    <script>
+        var socket = io();
+        function scrollToBottom() {
+            let messages = document.querySelector('#messageHere').lastElementChild;
+            messages.scrollIntoView();
+        }
+
+        async function sendMessage() {
+            let message = document.getElementById("textBox").value;
+            if (message === '') return alert("Cannot send empty message!");
+            socket.emit('createMessage', { text: message });
+            document.getElementById("textBox").value = '';
+        }
+
+        socket.on('connect', async function () {
+            let author = await $.get("/user");
+            let project = await $.get(`/projects/data?projectid=${window.location.search.slice(4)}`);
+            let params = JSON.parse(`{"room": "${window.location.search.slice(4)}", "name": "${author["name"]}", "roomName": "${project[0]["projectname"]}", "plink": "${author["picture"]}"}`);
+            socket.emit('join', params, function (err) {
+                if (err) {
+                    alert(err);
+                    window.location.href = '/';
+                } else {
+                    console.log('No Error');
+                }
+            })
+        });
+
+        socket.on('newMessage', function (message) {
+            const time = new Date().toTimeString().split(' ')[0];
+            let a = document.getElementById("messageHere").innerHTML + `
+                 <div class="message user-message">
+                     <img src="${message.plink}" class="bg-info rounded-circle" style="width:20%"></img>
+                     <strong>${message.from}</strong>
+                     <p>${message.text}</p>
+                     <span class="timestamp">${time}</span>
+         `
+            document.getElementById("messageHere").innerHTML = a;
+            scrollToBottom();
+        });
+
+        socket.on('updateUsersList', function (users) {
+            let ol = document.createElement('ol');
+            document.getElementById("onlineCount").innerText = users.length;
+            users.forEach(function (user) {
+                let li = document.createElement('li');
+                li.innerHTML = user;
+                ol.appendChild(li);
+            });
+
+            let usersList = document.querySelector('#onlineList');
+            usersList.innerHTML = "";
+            usersList.appendChild(ol);
+        })
+
+        $.get(`/projects/data?projectid=${window.location.search.slice(4)}`, (data, text) => {
+            document.getElementById("roomName").innerText = "Chat Room - " + data[0].projectname
+        })
+    </script>
+</head>
+
+<body id="notificationHere">
+    <div class="chat-platform">
+        <div class="sidebar">
+            <h2 id="onlineTitle">Online<p id="onlineCount">0</p>
+            </h2>
+            <ul class="user-list" id="onlineList">
+            </ul>
+        </div>
+
+        <div class="chat-area">
+            <div class="chat-header">
+                <h3 id="roomName">Chat Room</h3>
+            </div>
+            <!-- Chat Messages -->
+            <div class="chat-box" id="messageHere">
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message..." id="textBox">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

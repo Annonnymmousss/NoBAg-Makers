@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project History</title>
+    <link rel="stylesheet" href="styles history.css">
+    <link rel="stylesheet" href="/styles notification.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--Socket.io-->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!--Code for realtime notifications-->
+    <script src="/utils/notification.js"></script>
+
+    <!--Moment.js for time formatting-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <script>
+        setInterval(() => {
+            let projectid = window.location.search.slice(11);
+            $.get(`/historyget?projectid=${projectid}`, (data, text) => {
+                let a = [];
+                for (var i in data) {
+                    a.push(`<div class="history-item">
+            <div class="user-info">
+                <div class="user-name">${data[i].user}</div>
+            </div>
+            <div class="task-details">${data[i].action}</div>
+            <div class="timestamp">${moment(data[i].time).fromNow()}</div>
+        </div>`)
+                }
+                document.getElementById("historyHere").innerHTML = a.join('');
+            })
+        }, 200);
+    </script>
+</head>
+
+<body id="notificationHere">
+    <div class="history-container">
+        <h1>Project History</h1>
+        <div id="historyHere"></div>
+    </div>
+</body>
+
+</html>

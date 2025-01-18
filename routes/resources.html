@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Resources</title>
+    <link rel="stylesheet" href="/styles resources.css">
+    <link rel="stylesheet" href="/styles notification.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/advanced-ui.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--Socket.io-->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!--Code for realtime notifications-->
+    <script src="/utils/notification.js"></script>
+
+    <script>
+        $.get("/projects/resource?projectid=" + window.location.search.slice(11), (data, text) => {
+            function format_text(text) {
+                return text.replace(/(?:\*)([^*<\n]+)(?:\*)/g, "<strong>$1</strong>")
+                    .replace(/(?:_)([^_<\n]+)(?:_)/g, "<i>$1</i>")
+                    .replace(/(?:~)([^~<\n]+)(?:~)/g, "<s>$1</s>")
+                    .replace(/(?:```)([^```<\n]+)(?:```)/g, "<tt>$1</tt>");
+            }
+            let formattedData = format_text(data);
+            let splitted = formattedData.split("* ");
+            for (var i in splitted) {
+                let s = document.createElement("p");
+                s.innerHTML = splitted[i];
+                document.getElementById("message").appendChild(s);
+            }
+            document.getElementById("loadingResources").innerText = '';
+        });
+
+        async function regenerate() {
+            let p = document.getElementById("prompt").value;
+            $.post("/regenerate", {
+                prompt: p,
+                projectid: window.location.search.slice(11)
+            }).done(response => {
+                document.getElementById("prompt").value = '';
+                function format_text(text) {
+                    return text.replace(/(?:\*)([^*<\n]+)(?:\*)/g, "<strong>$1</strong>")
+                        .replace(/(?:_)([^_<\n]+)(?:_)/g, "<i>$1</i>")
+                        .replace(/(?:~)([^~<\n]+)(?:~)/g, "<s>$1</s>")
+                        .replace(/(?:```)([^```<\n]+)(?:```)/g, "<tt>$1</tt>");
+                }
+                let formattedData = format_text(response);
+                let splitted = formattedData.split("* ");
+                document.getElementById("message").innerHTML = '';
+                for (var i in splitted) {
+                    let s = document.createElement("p");
+                    s.innerHTML = splitted[i];
+                    document.getElementById("message").appendChild(s);
+                }
+                document.getElementById("loadingResources").innerText = '';
+            }).fail(response => {
+                alert(response.responseText);
+            });
+        }
+    </script>
+</head>
+
+<body id="notificationHere" class="advanced-ui">
+    <header>
+        <div class="container-fluid py-3 bg-gradient header-container">
+            <h1 class="text-white">Project Resources</h1>
+            <p class="lead text-white">All the resources you need for this project are listed below.</p>
+        </div>
+    </header>
+
+    <main class="container py-4">
+        <section>
+            <div id="message" class="message-container"></div>
+            <div id="loadingResources" class="text-center py-4">
+                <img src="https://cdn.discordapp.com/emojis/719087451100151858.webp?size=128&animated=true" alt="Loading">
+                <strong class="text-muted">Loading...</strong>
+            </div>
+            <div class="input-container my-4">
+                <input type="text" class="form-control" placeholder="Enter description of the project here..." id="prompt">
+                <button type="submit" class="btn btn-primary mt-3" onclick="regenerate()">Click to Regenerate</button>
+            </div>
+        </section>
+    </main>
+</body>
+
+<script>
+    const funnySearchLines = [
+        "We’re consulting the great oracle of Google together.",
+        "Let’s dive into the digital abyss and see what we find.",
+        "We’re summoning the internet gods as a team effort.",
+        "Let’s shake the web tree and see what falls out.",
+        "We’re taking a group stroll down Information Boulevard.",
+        "Together, we’ll poke around in the cyberspace haystack.",
+        "We’re engaging the hyper-intelligent algorithm overlords for wisdom.",
+        "Let’s decode the Matrix, one byte at a time.",
+        "We’re tickling the keys of the internet piano for some tunes.",
+        "Our search-party drones are off into the data jungle!",
+        "Let’s ask our collective browser crystal ball.",
+        "We’re virtually sending carrier pigeons to Google HQ.",
+        "Rolling the dice in the great casino of cyberspace—wish us luck!",
+        "We’re sweeping the internet’s nooks and crannies together.",
+        "Dusting off the archives of the digital universe—teamwork makes the dream work!"
+    ];
+
+    function getRandomNumber() {
+        return Math.floor(Math.random() * funnySearchLines.length);
+    }
+    let line = funnySearchLines[getRandomNumber()];
+    document.getElementById("loadingResources").innerHTML = "<img src='https://cdn.discordapp.com/emojis/719087451100151858.webp?size=128&animated=true'></img><p>" + line + "</p>";
+</script>
+
+</html>

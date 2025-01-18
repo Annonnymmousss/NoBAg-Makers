@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* General Body Styling */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #eef2f3, #d9e4ec);
+  color: #333;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Header Section */
+header {
+  background: linear-gradient(to right, #1e90ff, #00c6fb);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 10;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+header p {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+/* Main Section */
+main {
+  padding: 30px 20px;
+  max-width: 900px;
+  margin: 30px auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Section Titles */
+h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1e90ff;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #1e90ff;
+  padding-bottom: 5px;
+}
+
+/* Message Container */
+.message-container {
+  background: #f0f9ff;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.message-container p {
+  margin: 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+/* Input and Button Section */
+.input-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+input[type="text"] {
+  width: 70%;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #1e90ff;
+  box-shadow: 0 6px 12px rgba(30, 144, 255, 0.3);
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(to right, #1e90ff, #00c6fb);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(30, 144, 255, 0.4);
+  background: linear-gradient(to right, #007bff, #00b7f9);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Placeholder Animation */
+input::placeholder {
+  font-style: italic;
+  color: #aaa;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  input[type="text"] {
+    width: 90%;
+  }
+
+  button {
+    width: 90%;
+    font-size: 14px;
+  }
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer for Extra Style */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #f7f9fc;
+  font-size: 0.9rem;
+  color: #555;
+  border-top: 2px solid #1e90ff;
+  margin-top: 20px;
+}

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoBAg - Project Management Tool</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Link your CSS file -->
+    <style>
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(90deg, #007bff, #6610f2);
+            color: white;
+            padding: 50px 20px;
+            width: 100%;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            margin: 0;
+            animation: fadeIn 1.5s;
+        }
+
+        header p {
+            font-size: 1.5rem;
+            margin: 10px 0 0;
+            animation: fadeIn 2s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #343a40;
+            padding: 15px 0;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #007bff;
+        }
+
+        main {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+            position: relative;
+        }
+
+        .hero img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            filter: brightness(0.8);
+        }
+
+        .hero .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgb(2, 0, 0);
+            text-align: center;
+            animation: fadeIn 2.5s;
+            margin-top: 112px;
+        }
+
+        .hero .overlay h2 {
+            font-size: 3rem;
+            margin: 0;
+            margin-top: 112px;
+        }
+
+        .hero .overlay p {
+            font-size: 1.5rem;
+        }
+
+        .section {
+            margin: 50px 0;
+            text-align: center;
+            padding: 0 15px;
+            width: 80%;
+            animation: fadeIn 1.5s;
+        }
+
+        .section img {
+            width: 100%;
+            height: auto;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .cta {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            width: 80%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 2s;
+        }
+
+        .cta a {
+            color: white;
+            text-decoration: underline;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: white;
+            width: 100%;
+        }
+
+        a {
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 3rem;
+            }
+
+            .hero .overlay h2 {
+                font-size: 2.5rem;
+            }
+
+            .cta {
+                width: 90%;
+            }
+
+            .section {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to NoBAg </h1>
+        <p>Redefining project management for teams and individuals.</p>
+    </header>
+
+    <nav>
+        <% if (locals.isAuthenticated) { %>
+            <a href="/projects">My Projects</a>
+        <% } else { %>
+            <a href="/login">Login</a>
+        <% } %>
+        
+        <a href="/logout">Logout</a>
+        
+    </nav>
+
+    <main>
+        <div class="hero">
+            <img src="../Logos/NoBAG.png" style="width: 150px; height: auto;margin-top: 20px; " >
+            <div class="overlay">
+                <h2>Your Projects, Simplified</h2>
+                <p>Streamline your workflow with NoBAg today.</p>
+            </div>
+        </div>
+
+        <div id="features" class="section">
+            <strong>Why Choose NoBAg?</strong>
+            <ul>
+                <li><strong>Smart Project Management:</strong> Organize tasks, set priorities, and track progress effortlessly.</li>
+                <li><strong>Collaborative Chat Room:</strong> Stay connected with your team in real-time, brainstorm ideas, and resolve issues faster than ever.</li>
+                <li><strong>Real-Time Notifications:</strong> Never miss an update! Get instant alerts on project changes, messages, and deadlines.</li>
+                <li><strong>Interactive White Board:</strong> Discuss ideas and explain your mates through realtime whiteboard. </li>
+            </ul>
+            <img src="../Logos/Features.png" style="width: 800px; height: auto;margin-top: 20px">
+        </div>
+
+        <div id="about" class="section">
+            <strong>About NoBAg</strong>
+            <p>
+                Simplify. Collaborate. Succeed. With NoBAg, managing your projects has never been easier or more engaging.
+                It's time to leave behind the chaos and embrace streamlined teamwork.
+                NoBAg is a powerful, intuitive project management platform designed to streamline workflows
+                and remove the complexities often associated with managing projects. With an emphasis on simplicity and ease of
+                use, NoBAg provides various features that helps user to fruitfully completes their project.
+            </p>
+            
+        </div>
+
+        <div>
+            <img src="../Logos/Chatting.png" alt="" style="width: 300px; height: auto;margin-top: 20px ; margin-right: 20px;">
+            <img src="../Logos/resource.png" alt="" style="width: 300px; height: auto;margin-top: 20px ; margin-right: 20px">
+            <img src="../Logos/Whiteboard.png" alt="" style="width: 300px; height: auto;margin-top: 20px ; margin-right: 20px">
+        </div>
+           
+            
+     
+
+        <% if (locals.isAuthenticated) { %>
+            <div class="cta">
+                <p class="text-4xl">You are logged in.</p>
+            </div>
+        <% } else { %>
+            <div class="cta">
+                <p>You are not logged in. <a href="/login">Login</a>.</p>
+            </div>
+        <% } %>
+
+        <p class="cta">NoBAg – Where ideas turn into action. Try it today and redefine the way you manage projects! 🌟</p>
+    </main>
+
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %> NoBAg. All rights reserved.</p>
+    </footer>
+</body>
+</html>

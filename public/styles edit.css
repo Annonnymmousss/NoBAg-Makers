@@ -1,0 +1,163 @@
+/* Define CSS variables for easier theme customization */
+:root {
+  --primary-color: #5e5ee6;
+  --secondary-color: #34c8ff;
+  --button-hover-color: #4a4ac0;
+  --bg-gradient-start: rgb(34, 200, 255);
+  --bg-gradient-end: rgb(104, 255, 104);
+  --border-color: #ccc;
+  --text-color: #333;
+  --button-color: #f44336;
+  --button-hover: #d32f2f;
+}
+
+/* Global reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to left, var(--bg-gradient-start), var(--bg-gradient-end));
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+  transition: background 0.5s ease;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo .icon {
+  width: 35px;
+  height: 35px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+}
+
+.logout-button {
+  background-color: var(--button-color);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: var(--button-hover);
+  transform: scale(1.05);
+}
+
+main h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: var(--primary-color);
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(94, 94, 230, 0.3);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: var(--button-hover-color);
+  transform: scale(1.05);
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px;
+  }
+
+  .logo .icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .logout-button {
+    padding: 8px 12px;
+  }
+}

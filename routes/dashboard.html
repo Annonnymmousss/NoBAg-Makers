@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="/styles dashboard.css">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoBAg - My Projects</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles notification.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--Socket.io-->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!--Code for realtime notifications-->
+    <script src="/utils/notification.js"></script>
+
+    <script>
+        $.get("/uprojects", (data, text) => {
+            if (!document.getElementById("userProjects")) return;
+            document.getElementById("userProjects").innerHTML = data
+        });
+        $.get("/sprojects", (data, text) => {
+            if (!document.getElementById("sharedProjects")) return;
+            document.getElementById("sharedProjects").innerHTML = data
+        });
+
+        async function myprojects() {
+            let rows = await $.get("/uprojects");
+            document.getElementById("inside").innerHTML = '<table id="preview" class="table table-dark table-bordered">' +
+                '<thead style="text-align: center;">' +
+                '<th>Serial No.</th>' +
+                '<th>Project Name</th>' +
+                '<th>Role</th>' +
+                '<th>Description</th>' +
+                '<th>Type</th>' +
+                '<th>Action</th>' +
+                '</thead>' +
+                '<thead id="userProjects"></thead>' +
+                '</table>'
+            document.getElementById("userProjects").innerHTML = rows
+        }
+
+        async function shared() {
+            let rows = await $.get("/sprojects");
+            document.getElementById("inside").innerHTML = '<table id="preview" class="table table-dark table-bordered">' +
+                '<thead style="text-align: center;">' +
+                '<th>Serial No.</th>' +
+                '<th>Project Name</th>' +
+                '<th>Role</th>' +
+                '<th>Description</th>' +
+                '<th>Type</th>' +
+                '<th>Action</th>' +
+                '</thead>' +
+                '<thead id="sharedProjects"></thead>' +
+                '</table>'
+            document.getElementById("sharedProjects").innerHTML = rows
+        }
+
+        function deleteProject(pid) {
+            $.post("/delete", {
+                projectid: pid
+            }).done(response => {
+                document.getElementById("row" + pid).innerHTML = '';
+                alert("Successfully delete the project!")
+            }).fail(response => {
+                alert(response.responseText);
+            });
+        }
+
+        async function leaveProject(projectid) {
+            let user = await $.get("/user");
+            let project = await $.get(`/projects/data?projectid=${projectid}`);
+            $.post("/leaveProject", {
+                name: user["nickname"],
+                fullname: user["name"],
+                pid: projectid
+            }).done(r => {
+                alert("You left the project.");
+                socket.emit("notificationProjectLeave", { "message": `${user["name"]}(${user["email"]}) has left the project "${project[0].projectname}".`, "projectid": projectid });
+                document.getElementById(projectid).remove();
+            }).fail(r => {
+                alert(r.responseText);
+            })
+        }
+    </script>
+</head>
+
+<body id="notificationHere">
+    <div class="container">
+        <header class="header">
+            <div class="logo">NoBAg</div>
+            <button class="logout-button" onclick="window.location.href ='/logout'">Log Out</button>
+        </header>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <button type="button" class="create-project-button" id="createProjectButton">+ Create A Project</button>
+                <div class="dropdownFilter">
+                    <button onclick="window.location.href = '#'" class="dropdown-button"
+                        id="filterDropdownButton">Filter</button>
+                    <div class="dropdown-content" id="filterDropdownContent">
+
+                        <div onclick="filterOption('Web Development')">Web Development</div>
+                        <div onclick="filterOption('Frontend Development')">Frontend Development</div>
+                        <div onclick="filterOption('Backend Development')">Backend Development</div>
+                        <div onclick="filterOption('Full-Stack Development')">Full-Stack Development</div>
+                        <div onclick="filterOption('Web Design')">Web Design</div>
+                        <div onclick="filterOption('Software Development')">Software Development</div>
+                        <div onclick="filterOption('Desktop Application Development')">Desktop Application
+                            Development</div>
+                        <div onclick="filterOption('Mobile App Development')">Mobile App Development</div>
+                        <div onclick="filterOption('Game Development')">Game Development</div>
+                        <div onclick="filterOption('Embedded Software Development')">Embedded Software
+                            Development</div>
+                        <div onclick="filterOption('System Software Development')">System Software
+                            Development</div>
+                        <div onclick="filterOption('Native App Development')">Native App Development</div>
+                        <div onclick="filterOption('Cross-Platform App Development')">Cross-Platform App
+                            Development</div>
+                        <div onclick="filterOption('Progressive Web Apps (PWA)')">Progressive Web Apps (PWA)
+                        </div>
+                        <div onclick="filterOption('Data Science and Analytics')">Data Science and Analytics
+                        </div>
+                        <div onclick="filterOption('Big Data Development')">Big Data Development</div>
+                        <div onclick="filterOption('Database Development')">Database Development</div>
+
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal" id="createProjectModal">
+                        <div class="modal-content">
+                            <span class="close-button" id="closeModalButton">&times;</span>
+                            <h2>Create a New Project</h2>
+                            <form>
+                                <div class="form-group">
+                                    <label for="projectTitle">Title</label>
+                                    <input type="text" id="projectTitle" placeholder="Enter project title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="projectDescription">Description</label>
+                                    <input type="text" id="projectDescription" placeholder="Enter project description">
+                                </div>
+                                <div class="dropdown">
+                                    <label for="projectDescription">Type</label>
+                                    <button onclick="window.location.href = '#'" class="dropdown-button"
+                                        id="dropdownButton">Choose a project type from the dropdown menu</button>
+                                    <div class="dropdown-content" id="dropdownContent">
+
+                                        <div onclick="selectOption('Web Development')">Web Development</div>
+                                        <div onclick="selectOption('Frontend Development')">Frontend Development</div>
+                                        <div onclick="selectOption('Backend Development')">Backend Development</div>
+                                        <div onclick="selectOption('Full-Stack Development')">Full-Stack Development
+                                        </div>
+                                        <div onclick="selectOption('Web Design')">Web Design</div>
+                                        <div onclick="selectOption('Software Development')">Software Development</div>
+                                        <div onclick="selectOption('Desktop Application Development')">Desktop
+                                            Application
+                                            Development</div>
+                                        <div onclick="selectOption('Mobile App Development')">Mobile App Development
+                                        </div>
+                                        <div onclick="selectOption('Game Development')">Game Development</div>
+                                        <div onclick="selectOption('Embedded Software Development')">Embedded Software
+                                            Development</div>
+                                        <div onclick="selectOption('System Software Development')">System Software
+                                            Development</div>
+                                        <div onclick="selectOption('Native App Development')">Native App Development
+                                        </div>
+                                        <div onclick="selectOption('Cross-Platform App Development')">Cross-Platform App
+                                            Development</div>
+                                        <div onclick="selectOption('Progressive Web Apps (PWA)')">Progressive Web Apps
+                                            (PWA)
+                                        </div>
+                                        <div onclick="selectOption('Data Science and Analytics')">Data Science and
+                                            Analytics
+                                        </div>
+                                        <div onclick="selectOption('Big Data Development')">Big Data Development</div>
+                                        <div onclick="selectOption('Database Development')">Database Development</div>
+
+                                    </div>
+                                </div>
+                                <button type="submit" class="submit-button" onclick="create()">SUBMIT</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab active" onclick="myprojects()">My Projects</button>
+                    <button class="tab" onclick="shared()">Shared Projects</button>
+                </div>
+                <div id="inside">
+                    <table id="preview" class="table table-dark table-bordered">
+                        <thead style="text-align: center;">
+                            <th>Serial No.</th>
+                            <th>Project Name</th>
+                            <th>Role</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Action</th>
+                        </thead>
+                        <thead id="userProjects"></thead>
+                    </table>
+                </div>
+        </main>
+    </div>
+
+    <script>
+        //create project button part
+        document.getElementById("createProjectButton").addEventListener("click", function () {
+            document.getElementById("createProjectModal").style.display = "flex";
+        });
+
+        document.getElementById("closeModalButton").addEventListener("click", function () {
+            document.getElementById("createProjectModal").style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            const modal = document.getElementById("createProjectModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        const dropdownButton = document.getElementById('dropdownButton');
+        const dropdownContent = document.getElementById('dropdownContent');
+
+        // Toggle dropdown visibility
+        dropdownButton.addEventListener('click', () => {
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Select an option
+        function selectOption(option) {
+            dropdownButton.textContent = option;
+            dropdownContent.classList.remove('show');
+        }
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        const filterDropdownButton = document.getElementById('filterDropdownButton');
+        const filterDropdownContent = document.getElementById('filterDropdownContent');
+
+        // Toggle dropdown visibility
+        filterDropdownButton.addEventListener('click', () => {
+            filterDropdownContent.classList.toggle('show');
+        });
+
+        // Select an option
+        function filterOption(option) {
+            if (document.getElementById("userProjects")) {
+                filterDropdownButton.textContent = option;
+                filterDropdownContent.classList.remove('show');
+                $.post("/filter", {
+                    type: option
+                }).done(rows => {
+                    let a = [];
+                    const b = i + 1
+                    var j;
+                    let c = [];
+                    for (var i in rows) {
+                        for (j = 0; j < 51; j++) {
+                            c.push(rows[i].description.split('')[j]);
+                        }
+                        if (rows[i].description.split('').length > 50) {
+                            c.push('....');
+                        } else {
+                            c.push(' ');
+                        }
+
+                        a.push('<tr id=row' + rows[i].projectid + ' style="text-align: center;"><th scope="col" style="color: white;">' + b + '</th><th scope="col" style="color: white;"><p style="text-decoration: none;">' + rows[i].projectname + '</p></th><th scope="col" style="color: white;"><p style="text-decoration: none;">Owner</p></th><th scope="col" style="color: white;"><p style="text-decoration: none;">' + c.join('') + '</p></th><th scope="col" style="color: white;"><p style="text-decoration: none;">' + rows[i].type + '</p></th><th scope="col" style="color: white;"><div class="button-container"><button class="action-button open-button" onclick="window.location.href = \'/projects/' + rows[i].projectid + '\'"><span class="icon">🔗</span> OPEN</button><button class="action-button edit-button" onclick="window.location.href = \'/edit/' + rows[i].projectid + '\'"><span class="icon">✏️</span>EDIT</button><button class="action-button open-button" onclick="window.location.href=\'/history?projectid=' + rows[i].projectid + '\'">History</button><button class="action-button delete-button" id=' + rows[i].projectid + ' onclick="deleteProject(this.id)"><span class="icon">🗑️</span>DELETE</button></div></th></tr>')
+                    }
+
+                    document.getElementById("userProjects").innerHTML = a.join('');
+                }).fail(r => {
+                    alert(r.responseText);
+                })
+            } else if (document.getElementById("sharedProjects")) {
+                filterDropdownButton.textContent = option;
+                filterDropdownContent.classList.remove('show');
+                $.post("/filterShared", {
+                    type: option
+                }).done(rows => {
+                    console.log(rows);
+                    let a = [];
+                    var i;
+                    for (i = 0; i < rows.length; i++) {
+                        const b = i + 1
+                        var j;
+                        let c = [];
+                        for (j = 0; j < 51; j++) {
+                            c.push(rows[i].description.split('')[j]);
+                        }
+                        if (rows[i].description.split('').length > 50) {
+                            c.push('....');
+                        } else {
+                            c.push(' ');
+                        }
+                        if (rows[i].role === "Owner") {
+                            a.push("");
+                        } else {
+                            a.push('<tr id=' + rows[i].projectid + ' style="text-align: center;"><th scope="col" style="color: white;">' + b + '</th><th scope="col" style="color: white;"><p style="text-decoration: none;">' + rows[i].projectname + '</p></th><th scope="col" style="color: white;"><p style="text-decoration: none;">Member</p></th><th scope="col" style="color: white;"><p style="text-decoration: none;">' + c.join('') + '</p></th><th scope="col" style="color: white;"><p style="text-decoration: none;">' + rows[i].type + '</p></th><th scope="col" style="color: white;"><div class="button-container"><button class="action-button open-button" id=' + rows[i].projectid + ' onclick="leaveProject(this.id)">Leave Project</button><button class="action-button open-button" onclick="window.location.href=\'/projects/chat?id=' + rows[i].projectid + '\'">Chat Room</button><button class="action-button open-button" onclick="window.location.href=\'/whiteboard?projectid=' + rows[i].projectid + '\'">Whiteboard</button><button class="action-button open-button" onclick="window.location.href=\'/history?projectid=' + rows[i].projectid + '\'">History</button></th></tr>')
+                        }
+                    }
+                    console.log(a)
+
+                    document.getElementById("sharedProjects").innerHTML = a.join('');
+                }).fail(r => {
+                    alert(r.responseText);
+                })
+            }
+        }
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdownFilter')) {
+                filterDropdownContent.classList.remove('show');
+            }
+        });
+
+        function create() {
+            let t = document.getElementById("projectTitle").value;
+            let d = document.getElementById("projectDescription").value;
+            let type = document.getElementById("dropdownButton").textContent;
+            if (t === '' || d === '' || type === '') return alert("Title, Description and Type cannot be empty!");
+            $.post("/create", {
+                title: t,
+                description: d,
+                ptype: type
+            }).done(
+                function (response) {
+                    //add a success pop-up
+                    document.getElementById("projectTitle").value = "";
+                    document.getElementById("projectDescription").value = "";
+                    dropdownButton.textContent = 'Choose a project type from the dropdown menu';
+                    alert("Successfully created a new project!");
+                })
+                .fail(
+                    function (response) {
+                        //add a failed pop-up
+                        document.getElementById("projectTitle").value = "";
+                        document.getElementById("projectDescription").value = "";
+                        document.getElementById("projectType").value = "";
+                        alert(response.responseText)
+                    });
+        }
+    </script>
+</body>
+
+</html>

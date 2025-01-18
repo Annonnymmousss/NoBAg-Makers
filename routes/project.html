@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Members</title>
+    <link rel="stylesheet" href="/styles project.css">
+    <link rel="stylesheet" href="/styles notification.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--Socket.io-->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!--Code for realtime notifications-->
+    <script src="/utils/notification.js"></script>
+
+    <script>
+        setInterval(() => {
+            $.get(`/projects/data?projectid=${window.location.pathname.slice(10)}`, (data, o) => {
+                document.getElementById("projectName").innerText = "Project Title: " + data[0].projectname
+            })
+        }, 200);
+
+        $.get(`/projects/data?projectid=${window.location.pathname.slice(10)}`, (data, text) => {
+            var i;
+            let a = [];
+            for (i in data) {
+                if (data[i].role === "Owner") {
+                    a.push(`<tr id="${data[i].usernick}"><td><img src="${data[i].plink}" class="bg-info rounded-circle" style="width:20%"></img></td><td>${data[i].fullname}</td><td>${data[i].role}</td><td>${data[i].usernick}</td><td></td></tr>`)
+                } else {
+                    a.push(`<tr id="${data[i].usernick}"><td><img src="${data[i].plink}" class="bg-info rounded-circle" style="width:20%"></img></td><td>${data[i].fullname}</td><td>${data[i].role}</td><td>${data[i].usernick}</td><td><button class="add-button" onclick="removeMember('${data[i].usernick}', '${data[i].projectid}', '${data[i].fullname}')">Remove</button></td></tr>`)
+                }
+            }
+            document.getElementById("members").innerHTML = a.join('');
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container" id="notificationHere">
+        <h1 id="projectName"></h1>
+        </h1>
+        <button class="add-button"
+            onclick="window.location.href = `/projects/chat?id=${window.location.pathname.slice(10)}`">Chat
+            Room</button>
+        <button class="add-button"
+            onclick="window.location.href = `/whiteboard?projectid=${window.location.pathname.slice(10)}`">Whiteboard</button>
+        <button class="add-button"
+            onclick="window.location.href = `/projects/resources?projectid=${window.location.pathname.slice(10)}`">Resources
+            Suggestion</button>
+        <button class="add-button"
+            onclick="window.location.href = `/history?projectid=${window.location.pathname.slice(10)}`">History</button>
+        <h2>Manage Members</h2>
+        <div class="tabs">
+            <button class="tab" onclick="pMembers()">Members</button>
+            <button class="tab" onclick="addMembers()">Add Members</button>
+        </div>
+        <div id="toChange">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Full Name</th>
+                        <th>Role</th>
+                        <th>Username</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <thead id="members"></thead>
+            </table>
+        </div>
+    </div>
+</body>
+
+<script>
+    var socket = io();
+    async function removeMember(uid, projectid, fullname) {
+        let data = await $.get(`/projects/data?projectid=${window.location.pathname.slice(10)}`);
+        $.post("/rmember", {
+            id: uid,
+            pid: projectid,
+            fname: fullname
+        }).done(response => {
+            alert("Successfully removed the specified member from the project!");
+            socket.emit("notificationMemberRemove", { "message": `You were removed from the project ${data[0].projectname}`, "email": `${uid}@gmail.com` });
+            document.getElementById(uid).innerHTML = '';
+        }).fail(response => {
+            alert(response.reponseText);
+        })
+    }
+
+    function pMembers() {
+        document.getElementById("toChange").innerHTML = `<table>
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Full Name</th>
+                        <th>Role</th>
+                        <th>Username</th>
+                        <th>Add</th>
+                    </tr>
+                </thead>
+                <thead id="members"></thead>
+            </table>`
+        $.get(`/projects/data?projectid=${window.location.pathname.slice(10)}`, (data, text) => {
+            var i;
+            let a = [];
+            for (i in data) {
+                a.push(`<tr id="${data[i].usernick}"><td><img src="${data[i].plink}" class="bg-info rounded-circle" style="width:20%"></img></td><td>${data[i].fullname}</td><td>${data[i].role}</td><td>${data[i].usernick}</td><td><button class="add-button" onclick="removeMember('${data[i].usernick}', '${data[i].projectid}', '${data[i].fullname}')">Remove</button></td></tr>`)
+            }
+            document.getElementById("members").innerHTML = a.join('');
+        });
+    }
+
+    async function addMembers() {
+        document.getElementById("toChange").innerHTML = `<div class="search-bar">
+                <input type="text" placeholder="Enter username or email..." id="searchBar">
+                <button class="search-button" id="searchButton" onclick="search()">🔍</button>
+            </div>
+            `
+    }
+
+    async function search() {
+        let data = await $.get(`/projects/data?projectid=${window.location.pathname.slice(10)}`);
+        let email = document.getElementById("searchBar").value;
+        let projectid = window.location.pathname.slice(10);
+        $.post("/projects/addmember", {
+            id: email,
+            pid: projectid
+        }).done(response => {
+            document.getElementById("searchBar").value = '';
+            alert("Successfully added the specified member to the project!");
+            socket.emit("notificationMemberAdd", { "message": `You were added to the project ${data[0].projectname}`, "email": email });
+        }).fail(response => {
+            document.getElementById("searchBar").value = '';
+            alert(response["responseText"]);
+        })
+    }
+</script>
+
+</html>

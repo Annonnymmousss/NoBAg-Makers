@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Project</title>
+    <link rel="stylesheet" href="/styles edit.css">
+    <link rel="stylesheet" href="/styles notification.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--Socket.io-->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!--Code for realtime notifications-->
+    <script src="/utils/notification.js"></script>
+
+    <script>
+        var socket = io();
+        async function sub() {
+            let t = document.getElementById("title").value;
+            let d = document.getElementById("description").value;
+            let pid = window.location.pathname.split('').slice(6).join('');
+            let data = await $.get(`/projects/data?projectid=${pid}`);
+            if (t === '' || d === '') return alert("Title and Description cannot be empty!");
+            $.post("/submit", {
+                title: t,
+                description: d,
+                projectid: pid
+            }).done(
+                function (response) {
+                    //add a success pop-up
+                    document.getElementById("title").value = "";
+                    document.getElementById("description").value = "";
+                    alert("Successfully updated the title and description of the project!");
+                    socket.emit(`notificationProjectUpdate`, { "message": `The name of the Project "${data[0].projectname}" was changed to "${t}" and description to "${d}".`, "projectid": pid });
+                })
+                .fail(
+                    function (response) {
+                        //add a failed pop-up
+                        document.getElementById("title").value = "";
+                        document.getElementById("description").value = "";
+                        alert(response.responseText)
+                    });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="icon"></div>
+                <h1>NoBAg</h1>
+            </div>
+            <button class="logout-button" onclick="window.location.href = '/logout'">Log Out</button>
+        </header>
+
+        <main>
+            <h2>Edit Project.</h2>
+            <form id="details">
+                <div class="form-group">
+                    <label for="title">Enter Title</label>
+                    <input type="text" id="title" placeholder="Enter title here" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="description">Enter Description</label>
+                    <input type="text" id="description" placeholder="Enter description here" name="description">
+                </div>
+                <button type="button" class="submit-button" onclick="sub()">SUBMIT</button>
+            </form>
+        </main>
+    </div>
+</body>
+
+</html>
