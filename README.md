@@ -10,7 +10,9 @@
   <img src="https://img.shields.io/badge/Powered%20by-JavaScript-yellow?style=for-the-badge&logo=javascript">
 
 </p>
+---
 
+<img width="1000" alt="Screenshot 2025-01-25 at 8 52 08 PM" src="https://github.com/user-attachments/assets/0e4523e5-e169-4cc2-ac3f-fd9033e9d72f" />
 
 ---
 
