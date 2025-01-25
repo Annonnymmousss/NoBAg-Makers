@@ -11,6 +11,7 @@
 - [Workflow](#workflow-of-nobag)
 - [Interface](#ui-idea)
 - [Impact](#impact)
+- [Installation](#installation)
 
 
 
@@ -65,6 +66,10 @@ irrespective of our choice. Hence NoBAg means now you don’t have to carry anyt
 <h2>Installation</h2>
 
 1) Clone the repository
+2) Recreate a local database
+3) Install all the packages used
+4) Check for the availability of PORT
+5) Start the server
    
 
 
