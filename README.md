@@ -1,6 +1,7 @@
 **OVERVIEW**
 
-                                            ![NoBAG](https://github.com/user-attachments/assets/1ce1b30e-1149-4231-8ed7-1c77d36a830b)
+                                 ![NoBAG](https://github.com/user-attachments/assets/5894cafc-2327-4023-b010-a0b98d991298)
+
 
 Although there are really good project managing platforms out there , the way they simplifies one’s task is very much aware. Most of the softwares lag user interface , ease of using the platform and features that simplifies user’s task while completing their project. NoBAg solves this problem by providing various features and easy user interface.I am well aware that this is a very challenging task but I have set realistic goals considering the time frame of this programme and I am confident that I will be able to achieve them. I will continue to develop this project in future and make this into a full fledged Project Management Platform.
 
