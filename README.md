@@ -16,7 +16,7 @@
 ---
 
 ## *Introduction*
-Although there are really good project managing platforms out there most of the softwares lack user interface , ease of using the platform and features that simplifies user’s task while completing their project. NoBAg solves this problem by providing various features and easy user interface.I am well aware that this is a very challenging task but I have set realistic goals considering the time frame of this programme and I am confident that I will be able to achieve them. I will continue to develop this project in future and make this into a full fledged Project Management Platform.
+Although there are really good project managing platforms out there most of the softwares lack user interface , ease of using the platform and features that simplifies user’s task while completing their project. NoBAg solves this problem by providing various features and easy user interface.
 
 ---
 
