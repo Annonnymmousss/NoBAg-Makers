@@ -131,5 +131,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Roboto+Mono&color=%23FF5733&size=20&lines=Stay+Tuned+for+More+Updates!;Your+Feedback+Matters!;Let%27s+Visualize+Together!" alt="Typing SVG">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Roboto+Mono&color=%23FF5733&size=20&lines=Stay+Tuned+for+More+Updates!;Your+Feedback+Matters!;Let%27s+Remove+Backlogs+Together+with;NoBAg!" alt="Typing SVG">
 </p>
