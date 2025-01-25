@@ -21,9 +21,13 @@ available. </p>
 
 <h2>FEATURES OF NoBAg</h2>
 
+
+
 <img width="1000" alt="Screenshot 2024-12-01 at 4 35 59 AM" src="https://github.com/user-attachments/assets/a256b169-2e89-4888-88d4-07cf429a7a59" />
 
 <h2>WORKFLOW OF NoBAg</h2>
+
+
 
 <img width="1000" alt="Screenshot 2024-12-03 at 12 13 27 AM" src="https://github.com/user-attachments/assets/f4b593bb-7cb0-4850-81cf-55432f58288d" />
 
