@@ -62,5 +62,10 @@ which will prevent creation of backlog.</p>
 irrespective of our choice. Hence NoBAg means now you don’t have to carry anything whether its a bag of backlog.</p>
 
 
+<h2>Installation</h2>
+
+1) Clone the repository
+   
+
 
 
