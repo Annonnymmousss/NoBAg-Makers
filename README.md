@@ -39,8 +39,16 @@ available. </p>
 
 <img width="230" alt="Screenshot 2025-01-17 at 3 42 32 PM" src="https://github.com/user-attachments/assets/53de97fa-4ee0-49d3-afb4-935713576466" /> <img width="230" alt="Screenshot 2025-01-17 at 3 45 31 PM" src="https://github.com/user-attachments/assets/640df7ff-50c2-4f0c-a439-e9705b25d611" /> <img width="230" alt="Screenshot 2025-01-17 at 7 45 00 PM" src="https://github.com/user-attachments/assets/97936937-1103-4c0f-a0bd-d57acfdca0cc" /> <img width="230" alt="Screenshot 2025-01-17 at 8 03 06 PM" src="https://github.com/user-attachments/assets/eb8af32b-afb2-49eb-bf67-c7a3964036d9" /> <img width="230" alt="Screenshot 2025-01-25 at 8 53 53 PM" src="https://github.com/user-attachments/assets/46390e15-d2c7-4e33-a485-883c818be507" /> <img width="230" alt="Screenshot 2025-01-25 at 8 54 03 PM" src="https://github.com/user-attachments/assets/165e0023-759e-4e06-82e1-12ec81d0f61a" /> <img width="230" alt="Screenshot 2025-01-25 at 8 55 44 PM" src="https://github.com/user-attachments/assets/c7bc1dab-d49d-43f1-84b4-e384cb216840" /> <img width="230" alt="Screenshot 2025-01-25 at 8 55 52 PM" src="https://github.com/user-attachments/assets/f2a481e8-ae24-4270-83e5-cbda98d0fa46" />
 
+<h2>IMPACT</h2>
+<p>By simplifying project management processes, NoBAg enhances productivity and reduces inefficiencies, allowing
+teams to focus on high-value tasks instead of unnecessary serfing through internet. It justifies its name NoBAg
+which means no to something which you can carry implies no backlog as NoBAg will make your work so seamless
+which will prevent creation of backlog.</p>
 
 
+<h2> Why Term NoBAg</h2>
+<p>Bag implies something which you carry with you. Backlog is something which when created we have to carry
+irrespective of our choice. Hence NoBAg means now you don’t have to carry anything whether its a bag of backlog.</p>
 
 
 
