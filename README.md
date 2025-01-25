@@ -31,4 +31,6 @@ available. </p>
 
 <img width="1000" alt="Screenshot 2024-12-03 at 12 13 27 AM" src="https://github.com/user-attachments/assets/f4b593bb-7cb0-4850-81cf-55432f58288d" />
 
-
+<p>
+  NoBAg allows user to create its id in the platform which increases the privacy of its projects and to handle multiple accounts. The owner of the project who will create the project can add team members who are registered in NoBAg database and only the owner has the access to remove the members but the team members have the access to leave the project. Platform has a chatting feature which helps team members to discuss and it also shows the no. of users online and member come or leave the chatroom. It also includes an interactive whiteboard in which they can discuss and the work on it is visible to all the members in the project. It has a resource suggestor feature with which owner get the suggestion for the most important resources and links to most appropriate resources regarding the project and even the user has the access to regerate the result if they dont like the output. 
+</p>
