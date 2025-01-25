@@ -18,3 +18,8 @@ future and make this into a full fledged Project Management Platform.
 and remove the complexities often associated with managing projects. With an emphasis on simplicity and ease of
 use, NoBAg provides various features that helps user to fruitfully completes their project. NoBAg has various features and easy user interface which makes it ahead from other project management platform
 available. </p>
+
+<h2>FEATURES OF NoBAg</h2>
+
+<img width="100" alt="Screenshot 2024-12-01 at 4 35 59 AM" src="https://github.com/user-attachments/assets/a256b169-2e89-4888-88d4-07cf429a7a59" />
+
