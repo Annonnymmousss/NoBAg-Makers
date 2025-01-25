@@ -1,4 +1,5 @@
 <h1>NoBAg</h1>
+<h2> An AI powered Next-Generation Task & Project Management Platform </h2>
 
 <img width="1000" alt="Screenshot 2025-01-25 at 8 52 08 PM" src="https://github.com/user-attachments/assets/d1b9ceab-455c-4f3a-afa1-af991b91253a" />
 
