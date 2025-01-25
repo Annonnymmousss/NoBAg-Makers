@@ -6,7 +6,11 @@
 <h2>TABLE OF CONTENT</h2>
 
 - [Introduction](#introduction)
-- [DESCRIPTION OF NoBAg](#description-of-nobag)
+- [Description](#description-of-nobag)
+- [Features](#description-of-nobag)
+- [Workflow](#workflow-of-nobag)
+- [Interface](#ui-idea)
+- [Impact](#impact)
 
 
 
