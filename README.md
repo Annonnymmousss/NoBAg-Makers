@@ -3,8 +3,14 @@
 
 <img width="1000" alt="Screenshot 2025-01-25 at 8 52 08 PM" src="https://github.com/user-attachments/assets/d1b9ceab-455c-4f3a-afa1-af991b91253a" />
 
+<h2>TABLE OF CONTENT</h2>
 
-<h2>Overview</h2>
+- [Introduction](#introduction)
+- [DESCRIPTION OF NoBAg](#description)
+
+
+
+<h2>Introduction</h2>
 
 <p>
   Although there are really good project managing platforms out there , the way they simplifies one’s task is very
