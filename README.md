@@ -10,7 +10,6 @@
   <img src="https://img.shields.io/badge/Powered%20by-JavaScript-yellow?style=for-the-badge&logo=javascript">
 
 </p>
----
 
 <img width="1000" alt="Screenshot 2025-01-25 at 8 52 08 PM" src="https://github.com/user-attachments/assets/0e4523e5-e169-4cc2-ac3f-fd9033e9d72f" />
 
@@ -128,7 +127,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## *Upcoming Features *
 
-<img width="1000" alt="Screenshot 2024-12-03 at 1 09 17 PM" src="https://github.com/user-attachments/assets/5e433cb0-73df-4ea3-b224-d578dbb9d2f3" />
+<img width="1000" alt="Screenshot 2024-12-03 at 1 09 17 PM" src="https://github.com/user-attachments/assets/93ed4813-4e91-4315-83ee-058f8379d6cd" />
+
 
 ---
 
